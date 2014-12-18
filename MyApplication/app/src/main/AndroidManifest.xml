@@ -19,6 +19,9 @@
         android:protectionLevel="signature" />
     <uses-permission android:name="com.example.ukumar.infapushtemp.permission.C2D_MESSAGE" />
 
+    <meta-data
+        android:name="com.parse.push.notification_icon"
+        android:resource="@drawable/ic_launcher" />
 
     <application
         android:allowBackup="true"
@@ -49,20 +52,13 @@
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-
                 <!--
                   IMPORTANT: Change "com.parse.tutorials.pushnotifications" to match your app's package name.
                 -->
                 <category android:name="com.example.ukumar.infapushtemp" />
             </intent-filter>
         </receiver>
-        <receiver android:name="com.parse.ParsePushBroadcastReceiver" android:exported="false">
-        <intent-filter>
-                <action android:name="com.parse.push.intent.RECEIVE" />
-                <action android:name="com.parse.push.intent.DELETE" />
-                <action android:name="com.parse.push.intent.OPEN" />
-            </intent-filter>
-        </receiver>
+
 
     </application>
 
