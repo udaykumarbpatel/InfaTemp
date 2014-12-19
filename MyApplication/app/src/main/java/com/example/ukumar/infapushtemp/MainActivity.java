@@ -1,61 +1,78 @@
 package com.example.ukumar.infapushtemp;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.telephony.TelephonyManager;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
-import com.parse.Parse;
+import com.parse.FindCallback;
+import com.parse.ParseAnalytics;
 import com.parse.ParseException;
-import com.parse.ParsePush;
-import com.parse.PushService;
+import com.parse.ParseInstallation;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
-public class MainActivity extends ActionBarActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Parse.initialize(this, "K8LKeCtpnFUyGC3dBhu4XKUqoldwBQvHdzkHIsJ5", "kPz6yU5Tgn0H4F1Zwr9LLq1xWV6rElolLMQKZqUF");
+        ParseAnalytics.trackAppOpened(getIntent());
 
-        PushService.setDefaultPushCallback(this, MainActivity.class);
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 
-        ParsePush.subscribeInBackground("", new SaveCallback() {
+        TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+        String imei = telephonyManager.getDeviceId();
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Installation");
+        query.whereEqualTo("IMEI", imei);
+
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> scoreList, ParseException e) {
+                if (e == null) {
+                    Toast.makeText(getApplicationContext(),scoreList.size(), Toast.LENGTH_SHORT).show();
+                    Log.d("score", "Retrieved " + scoreList.size() + " scores");
+                } else {
+                    Log.d("score", "Error: " + e.getMessage());
+                }
+            }
+        });
+
+
+        ParseInstallation.getCurrentInstallation().put("IMEI", imei);
+
+
+
+        ParseInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
-                    Log.d("com.parse.push", "successfully subscribed to the broadcast channel.");
+//                    Toast toast = Toast.makeText(getApplicationContext(),"Successfully added your Profile", Toast.LENGTH_SHORT);
+//                    toast.show();
                 } else {
-                    Log.e("com.parse.push", "failed to subscribe for push", e);
+                    e.printStackTrace();
+
+                    Toast toast = Toast.makeText(getApplicationContext(), "Failed to retrieve your profile!", Toast.LENGTH_SHORT);
+                    toast.show();
                 }
             }
         });
 
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    public void onStart(){
+        super.onStart();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }

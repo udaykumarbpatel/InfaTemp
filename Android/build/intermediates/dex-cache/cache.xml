@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\ukumar\Documents\GitHub\InfaTemp\InfaTemp\Android\app\libs\Parse-1.4.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="8daf146aea8cd5245bb90f802f2cd4b8dd855eca">
+        <dex dex="C:\Users\ukumar\Documents\GitHub\InfaTemp\InfaTemp\Android\app\build\intermediates\pre-dexed\debug\Parse-1.4.3-ad399d93aea6d74c2b5c33d3d1bf84e6fa9b8ef1.jar" />
+    </item>
+    <item
+        jar="C:\Users\ukumar\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-v4\18.0.0\support-v4-18.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="44ec51e9d395a47aab135e5e1b556c0007442156">
+        <dex dex="C:\Users\ukumar\Documents\GitHub\InfaTemp\InfaTemp\Android\app\build\intermediates\pre-dexed\debug\support-v4-18.0.0-12260807d61892df2f504472c2ec02ba6fcb0705.jar" />
+    </item>
+
+</items>
