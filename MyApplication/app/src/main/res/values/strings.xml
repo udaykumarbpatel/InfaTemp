@@ -3,6 +3,7 @@
 
     <string name="app_name">InfaPushTemp</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Send Push</string>
+    <string name="title_activity_send_push">SendPushActivity</string>
 
 </resources>

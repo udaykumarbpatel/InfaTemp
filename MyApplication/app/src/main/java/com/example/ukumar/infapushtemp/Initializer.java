@@ -18,5 +18,6 @@ public class Initializer extends Application {
         super.onCreate();
         Parse.initialize(this, "K8LKeCtpnFUyGC3dBhu4XKUqoldwBQvHdzkHIsJ5", "kPz6yU5Tgn0H4F1Zwr9LLq1xWV6rElolLMQKZqUF");
         PushService.setDefaultPushCallback(this, MainActivity.class);
+        PushService.subscribe(this, "Everyone", MainActivity.class);
     }
 }
