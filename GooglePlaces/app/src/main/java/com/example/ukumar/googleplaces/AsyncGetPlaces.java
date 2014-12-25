@@ -2,6 +2,7 @@ package com.example.ukumar.googleplaces;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONException;
 
@@ -46,9 +47,9 @@ public class AsyncGetPlaces extends AsyncTask<String, Void, ArrayList<Places>> {
                 }
 
 
-                ArrayList<Places> movies = MapUtil.PlacesJSONParser
+                ArrayList<Places> locations = MapUtil.PlacesJSONParser
                         .parsePlaces(sb.toString());
-                return movies;
+                return locations;
             }
         } catch (MalformedURLException e) {
             Log.d("demo", e.getMessage());
@@ -69,11 +70,12 @@ public class AsyncGetPlaces extends AsyncTask<String, Void, ArrayList<Places>> {
         if (result != null) {
             results.getResult(result);
         } else {
-            Log.d("demo", "null result");
+            results.response_error();
         }
     }
 
     public interface ResultsPassing {
         public void getResult(ArrayList<Places> result);
+        public void response_error();
     }
 }

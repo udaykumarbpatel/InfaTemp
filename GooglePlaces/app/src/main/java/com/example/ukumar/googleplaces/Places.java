@@ -1,13 +1,9 @@
 package com.example.ukumar.googleplaces;
 
 import android.util.Log;
-import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 /**
  * Created by ukumar on 12/24/2014.
@@ -26,20 +22,17 @@ public class Places {
         this.name = placesJSONObject.getString("name");
 
 
-
-        if(placesJSONObject.has("opening_hours")) {
+        if (placesJSONObject.has("opening_hours")) {
             this.open_hours = placesJSONObject.getJSONObject("opening_hours").getString("open_now");
         } else {
             this.open_hours = "Not Available";
         }
 
-        if(placesJSONObject.has("photos")) {
+        if (placesJSONObject.has("photos")) {
             this.photo_reference = placesJSONObject.getJSONArray("photos").getJSONObject(0).getString("photo_reference");
         } else {
             this.photo_reference = "NA";
         }
-
-
 
 
 //        JSONArray types = placesJSONObject.getJSONArray("types");

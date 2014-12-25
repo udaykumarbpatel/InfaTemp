@@ -36,16 +36,13 @@ public class ItemListBaseAdapter extends BaseAdapter {
 
     public View getView(int position, View convertView, ViewGroup parent) {
         TextView place_name;
-//        ImageView audience_image;
 
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = inflater.inflate(R.layout.list_view_places, parent,
                 false);
-
         place_name = (TextView) convertView.findViewById(R.id.name);
         place_name.setText(placesList.get(position).getName());
-
         return convertView;
     }
 
