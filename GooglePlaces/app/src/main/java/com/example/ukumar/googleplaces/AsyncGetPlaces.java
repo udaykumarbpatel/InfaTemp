@@ -16,17 +16,17 @@ import java.util.ArrayList;
 /**
  * Created by ukumar on 12/24/2014.
  */
-public class AsyncGetPlaces extends AsyncTask<String, Void, ArrayList<Places>>{
+public class AsyncGetPlaces extends AsyncTask<String, Void, ArrayList<Places>> {
 
     ResultsPassing results;
 
-    public AsyncGetPlaces(ResultsPassing results)
-    {
+    public AsyncGetPlaces(ResultsPassing results) {
         this.results = results;
     }
 
     @Override
     protected ArrayList<Places> doInBackground(String... params) {
+
         String urlString = params[0];
         try {
             URL url = new URL(urlString);

@@ -1,5 +1,8 @@
 package com.example.ukumar.googleplaces;
 
+import android.util.Log;
+import android.widget.Toast;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,18 +18,37 @@ public class Places {
     String name;
     String open_hours;
     String photo_reference;
-    ArrayList<String> type;
+//    ArrayList<String> type;
 
     public Places(JSONObject placesJSONObject) throws JSONException {
         this.lat = placesJSONObject.getJSONObject("geometry").getJSONObject("location").getDouble("lat");
         this.lng = placesJSONObject.getJSONObject("geometry").getJSONObject("location").getDouble("lng");
         this.name = placesJSONObject.getString("name");
-        this.open_hours = placesJSONObject.getJSONObject("opening_hours").getString("open_now");
-        this.photo_reference = placesJSONObject.getJSONArray("photos").getJSONObject(0).getString("photo_reference");
-        JSONArray types = placesJSONObject.getJSONArray("types");
-        for (int i = 0; i < types.length(); i++) {
-            type.add(types.getString(i));
+
+
+
+        if(placesJSONObject.has("opening_hours")) {
+            this.open_hours = placesJSONObject.getJSONObject("opening_hours").getString("open_now");
+        } else {
+            this.open_hours = "Not Available";
         }
+
+        if(placesJSONObject.has("photos")) {
+            this.photo_reference = placesJSONObject.getJSONArray("photos").getJSONObject(0).getString("photo_reference");
+        } else {
+            this.photo_reference = "NA";
+        }
+
+
+
+
+//        JSONArray types = placesJSONObject.getJSONArray("types");
+//
+//        for (int i = 0; i < types.length(); i++) {
+//            type.add(types.getString(i));
+//        }
+
+        Log.d("demo", "Place    : " + name);
     }
 
     public double getLat() {
@@ -69,11 +91,11 @@ public class Places {
         this.photo_reference = photo_reference;
     }
 
-    public ArrayList<String> getType() {
-        return type;
-    }
-
-    public void setType(ArrayList<String> type) {
-        this.type = type;
-    }
+//    public ArrayList<String> getType() {
+//        return type;
+//    }
+//
+//    public void setType(ArrayList<String> type) {
+//        this.type = type;
+//    }
 }

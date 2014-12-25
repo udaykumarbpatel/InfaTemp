@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 /**
  * Created by ukumar on 12/24/2014.
  */
-public class ItemListBaseAdapter extends BaseAdapter{
+public class ItemListBaseAdapter extends BaseAdapter {
 
     Context context;
     ArrayList<Places> placesList;
@@ -37,14 +36,12 @@ public class ItemListBaseAdapter extends BaseAdapter{
 
     public View getView(int position, View convertView, ViewGroup parent) {
         TextView place_name;
-        ImageView audience_image;
+//        ImageView audience_image;
 
-        if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.list_view_places, parent,
-                    false);
-        }
+        LayoutInflater inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        convertView = inflater.inflate(R.layout.list_view_places, parent,
+                false);
 
         place_name = (TextView) convertView.findViewById(R.id.name);
         place_name.setText(placesList.get(position).getName());

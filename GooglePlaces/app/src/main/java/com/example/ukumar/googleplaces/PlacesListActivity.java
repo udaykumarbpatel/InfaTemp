@@ -23,9 +23,10 @@ public class PlacesListActivity extends Activity implements AsyncGetPlaces.Resul
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_places_list);
 
+        list_view = (ListView) findViewById(R.id.listView1);
         progressstart("Loading Places to Visit....");
-        new AsyncGetPlaces(this).execute("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=48.2206849,16.3800599&radius=42000&types=amusement_park&key=AIzaSyDLM-DLQfIVDAMUrFZRF27iIK9utMVLFUI");
 
+        new AsyncGetPlaces(this).execute("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=48.2206849,16.3800599&radius=42000&types=amusement_park&key=AIzaSyABEP4_tb0irjCJV1dS_6Jkne6J4QcyyvM");
 
     }
 
@@ -57,7 +58,9 @@ public class PlacesListActivity extends Activity implements AsyncGetPlaces.Resul
     public void getResult(ArrayList<Places> result) {
         progressdismiss();
         this.final_result = result;
+
         places_list_adapter = new ItemListBaseAdapter(this, result);
+
         list_view.setAdapter(places_list_adapter);
     }
 
