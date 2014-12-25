@@ -1,11 +1,20 @@
 package com.example.ukumar.googleplaces;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -13,23 +22,80 @@ import java.util.ArrayList;
 public class PlacesListActivity extends Activity implements AsyncGetPlaces.ResultsPassing {
 
     ProgressDialog progressDialog;
-    ArrayList<Places> final_result, places;
+    ArrayList<Places> final_result;
     ItemListBaseAdapter places_list_adapter;
     ListView list_view;
+    LocationManager locationManager;
+    LocationListener simpleLocationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+            new AsyncGetPlaces(PlacesListActivity.this).execute("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + location.getLatitude()
+                    + ","
+                    + location.getLongitude()
+                    + "&radius=17000&types=amusement_park|aquarium|art_gallery|casino|church|hindu_temple|mosque|movie_theater|museum|night_club|place_of_worship|restaurant|shopping_mall|zoo&key=AIzaSyABEP4_tb0irjCJV1dS_6Jkne6J4QcyyvM");
+        }
 
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_places_list);
-
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         list_view = (ListView) findViewById(R.id.listView1);
-        progressstart("Loading Places to Visit....");
-
-        new AsyncGetPlaces(this).execute("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=48.2206849,16.3800599&radius=42000&types=amusement_park&key=AIzaSyABEP4_tb0irjCJV1dS_6Jkne6J4QcyyvM");
-
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (!locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Network not enabled")
+                    .setMessage("Would like to enable the Location Services? ")
+                    .setCancelable(true)
+                    .setPositiveButton("Yes",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,
+                                                    int which) {
+                                    Intent i = new Intent(
+                                            Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                                    startActivity(i);
+                                }
+                            })
+                    .setNegativeButton("No",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,
+                                                    int which) {
+                                    dialog.cancel();
+                                    finish();
+                                }
+                            });
+            AlertDialog alert = builder.create();
+            alert.show();
+        } else {
+            locationManager.requestLocationUpdates(
+                    LocationManager.NETWORK_PROVIDER, 60000, 10,
+                    simpleLocationListener);
+            ProgressDialogStart("Loading Places to Visit....");
+
+        }
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -56,7 +122,7 @@ public class PlacesListActivity extends Activity implements AsyncGetPlaces.Resul
 
     @Override
     public void getResult(ArrayList<Places> result) {
-        progressdismiss();
+        progressDialogStop();
         this.final_result = result;
 
         places_list_adapter = new ItemListBaseAdapter(this, result);
@@ -64,13 +130,18 @@ public class PlacesListActivity extends Activity implements AsyncGetPlaces.Resul
         list_view.setAdapter(places_list_adapter);
     }
 
+    @Override
+    public void response_error() {
+        Toast.makeText(this, "No Results found !!! ", Toast.LENGTH_LONG).show();
+    }
 
-    public void progressstart(String str) {
+
+    public void ProgressDialogStart(String str) {
         progressDialog = ProgressDialog.show(this, null, str);
         progressDialog.setCancelable(false);
     }
 
-    public void progressdismiss() {
+    public void progressDialogStop() {
         progressDialog.dismiss();
     }
 }
