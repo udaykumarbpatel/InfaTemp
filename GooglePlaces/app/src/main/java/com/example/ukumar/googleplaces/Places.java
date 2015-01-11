@@ -40,8 +40,6 @@ public class Places {
 //        for (int i = 0; i < types.length(); i++) {
 //            type.add(types.getString(i));
 //        }
-
-        Log.d("demo", "Place    : " + name);
     }
 
     public double getLat() {

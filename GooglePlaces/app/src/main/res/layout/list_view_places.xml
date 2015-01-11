@@ -15,11 +15,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/photo"
-        android:text="Udakumar"
         android:textSize="19sp"
         android:textStyle="bold"
-        android:layout_alignBottom="@+id/photo"
         android:layout_alignParentTop="true"
         android:textAlignment="center" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name"
+        android:id="@+id/open_hour"
+        android:textSize="19sp"
+        android:layout_toRightOf="@+id/photo" />
+
 
 </RelativeLayout>
