@@ -1,9 +1,9 @@
 package com.example.ukumar.googleplaces;
 
-import android.util.Log;
-
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by ukumar on 12/24/2014.
@@ -14,7 +14,6 @@ public class Places {
     String name;
     String open_hours;
     String photo_reference;
-//    ArrayList<String> type;
 
     public Places(JSONObject placesJSONObject) throws JSONException {
         this.lat = placesJSONObject.getJSONObject("geometry").getJSONObject("location").getDouble("lat");
@@ -34,12 +33,6 @@ public class Places {
             this.photo_reference = "NA";
         }
 
-
-//        JSONArray types = placesJSONObject.getJSONArray("types");
-//
-//        for (int i = 0; i < types.length(); i++) {
-//            type.add(types.getString(i));
-//        }
     }
 
     public double getLat() {
@@ -82,11 +75,4 @@ public class Places {
         this.photo_reference = photo_reference;
     }
 
-//    public ArrayList<String> getType() {
-//        return type;
-//    }
-//
-//    public void setType(ArrayList<String> type) {
-//        this.type = type;
-//    }
 }

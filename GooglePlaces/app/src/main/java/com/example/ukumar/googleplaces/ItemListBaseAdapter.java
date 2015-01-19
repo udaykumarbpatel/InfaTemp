@@ -65,7 +65,7 @@ public class ItemListBaseAdapter extends BaseAdapter {
             place_open_hours.setText("Open Now");
         } else if (placesList.get(position).getOpen_hours().equals("false"))
         {
-            place_open_hours.setText("Not Open");
+            place_open_hours.setText("Closed");
         }
 
         return convertView;

@@ -1,8 +1,10 @@
-package com.example.ukumar.infapushtemp;
+package com.example.ukumar.gcskickoff_2014;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.view.Menu;
@@ -12,9 +14,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.parse.Parse;
 import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
+import com.parse.PushService;
 import com.parse.SaveCallback;
 
 
@@ -27,14 +31,11 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Inititalize the and Sign-in for the Parse
         ParseAnalytics.trackAppOpened(getIntent());
-
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-
         TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-
         ParseInstallation.getCurrentInstallation().put("IMEI", telephonyManager.getDeviceId());
-
         ParseInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -48,7 +49,23 @@ public class MainActivity extends Activity {
                 }
             }
         });
+
+
+        Button send_task = (Button) findViewById(R.id.send_alert);
+
+        send_task.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplication(), SendPushActivity.class);
+                intent.putExtra(MESSAGE, "MainActivity");
+                startActivity(intent);
+            }
+        });
+
+
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -59,17 +76,16 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Toast toast = Toast.makeText(getApplicationContext(), item + " is selected", Toast.LENGTH_SHORT);
-        toast.show();
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
 
-        Intent intent = new Intent(this, SendPushActivity.class);
-        intent.putExtra(MESSAGE, "MainActivity");
-        startActivity(intent);
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
-
-    public void onStart() {
-        super.onStart();
-    }
-
 }
