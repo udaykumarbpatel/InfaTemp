@@ -1,4 +1,4 @@
-package com.example.ukumar.googleplaces;
+package com.example.ukumar.gcskickoff_2014;
 
 /**
  * Created by ukumar on 1/10/2015.

@@ -22,9 +22,6 @@ public class SendPushActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_push);
 
-        Intent intent = getIntent();
-        String message = intent.getStringExtra(MainActivity.MESSAGE);
-
         tx1 = (EditText) findViewById(R.id.alert_text);
         Button send_alert = (Button) findViewById(R.id.alert);
 

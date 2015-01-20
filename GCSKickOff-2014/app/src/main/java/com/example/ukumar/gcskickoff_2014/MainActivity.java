@@ -19,8 +19,6 @@ import com.parse.SaveCallback;
 
 public class MainActivity extends Activity {
 
-    public static final String MESSAGE = "FLAG";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
@@ -46,12 +44,20 @@ public class MainActivity extends Activity {
         });
 
         Button send_task = (Button) findViewById(R.id.send_alert);
+        Button places_visit = (Button) findViewById(R.id.places_visit);
 
         send_task.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SendPushActivity.class);
-                intent.putExtra(MESSAGE, "MainActivity");
+                startActivity(intent);
+            }
+        });
+
+        places_visit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), PlacesListActivity.class);
                 startActivity(intent);
             }
         });
