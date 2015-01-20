@@ -8,7 +8,6 @@ import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -30,7 +29,6 @@ public class MainActivity extends Activity {
         ParseAnalytics.trackAppOpened(getIntent());
         super.onCreate(savedInstanceState);
 
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         ParseInstallation.getCurrentInstallation().put("IMEI", telephonyManager.getDeviceId());
         ParseInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
@@ -47,7 +45,6 @@ public class MainActivity extends Activity {
             }
         });
 
-
         Button send_task = (Button) findViewById(R.id.send_alert);
 
         send_task.setOnClickListener(new View.OnClickListener() {
@@ -58,10 +55,7 @@ public class MainActivity extends Activity {
                 startActivity(intent);
             }
         });
-
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -81,12 +75,7 @@ public class MainActivity extends Activity {
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
-    }
-
-    public void onStart() {
-        super.onStart();
     }
 
 }

@@ -15,7 +15,6 @@ import com.parse.ParsePush;
 
 
 public class SendPushActivity extends Activity {
-
     EditText tx1;
 
     @Override
@@ -26,34 +25,25 @@ public class SendPushActivity extends Activity {
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainActivity.MESSAGE);
 
-        Log.d("Error", "Intent Received");
-
         tx1 = (EditText) findViewById(R.id.alert_text);
         Button send_alert = (Button) findViewById(R.id.alert);
-        Log.d("Error", "Text and Button initialized");
 
         send_alert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Error", "Inside onclick listener");
                 if (tx1.getText().length() <= 0) {
                     Toast toast = Toast.makeText(getApplicationContext(), "Please provide Input!", Toast.LENGTH_SHORT);
                     toast.show();
                 } else {
-                    Log.d("Error", "Inside onclick listener - Else part");
                     String input = tx1.getText().toString();
                     ParsePush push = new ParsePush();
                     push.setMessage(input);
-                    push.setChannel("");
                     push.setChannel("");
                     push.sendInBackground();
                 }
             }
         });
-
     }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -67,12 +57,10 @@ public class SendPushActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
