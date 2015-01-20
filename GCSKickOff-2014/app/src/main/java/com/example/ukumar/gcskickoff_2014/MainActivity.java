@@ -3,8 +3,6 @@ package com.example.ukumar.gcskickoff_2014;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.view.Menu;
@@ -14,11 +12,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.parse.Parse;
 import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
-import com.parse.PushService;
 import com.parse.SaveCallback;
 
 
@@ -28,11 +24,12 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         // Inititalize the and Sign-in for the Parse
         ParseAnalytics.trackAppOpened(getIntent());
+        super.onCreate(savedInstanceState);
+
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         ParseInstallation.getCurrentInstallation().put("IMEI", telephonyManager.getDeviceId());
@@ -56,7 +53,7 @@ public class MainActivity extends Activity {
         send_task.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplication(), SendPushActivity.class);
+                Intent intent = new Intent(MainActivity.this, SendPushActivity.class);
                 intent.putExtra(MESSAGE, "MainActivity");
                 startActivity(intent);
             }
@@ -64,7 +61,6 @@ public class MainActivity extends Activity {
 
 
     }
-
 
 
     @Override
@@ -88,4 +84,9 @@ public class MainActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void onStart() {
+        super.onStart();
+    }
+
 }
