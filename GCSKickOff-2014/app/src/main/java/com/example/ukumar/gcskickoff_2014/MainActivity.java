@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.ParseAnalytics;
@@ -16,16 +18,41 @@ import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.SaveCallback;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
+        super.onCreate(savedInstanceState);
 
         // Inititalize the and Sign-in for the Parse
         ParseAnalytics.trackAppOpened(getIntent());
-        super.onCreate(savedInstanceState);
+        TextView notification_title = (TextView) findViewById(R.id.notification_title);
+        TextView notification_message = (TextView) findViewById(R.id.notification_message);
+
+        notification_title.setVisibility(View.INVISIBLE);
+        notification_message.setVisibility(View.INVISIBLE);
+
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            try {
+                String jsonData = extras.getString("com.parse.Data");
+                notification_title.setVisibility(View.VISIBLE);
+                notification_message.setVisibility(View.VISIBLE);
+                JSONObject notification = new JSONObject(jsonData);
+                String message = notification.getString("alert");
+                notification_title.setText("Last Alert!!!! ");
+                notification_message.setText(message);
+
+            } catch (JSONException e) {
+                Toast.makeText(getApplicationContext(), "Something went wrong with the notification", Toast.LENGTH_SHORT).show();
+            }
+        }
 
         TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         ParseInstallation.getCurrentInstallation().put("IMEI", telephonyManager.getDeviceId());
