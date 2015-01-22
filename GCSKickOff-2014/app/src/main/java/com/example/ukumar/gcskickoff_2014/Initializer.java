@@ -1,5 +1,6 @@
 package com.example.ukumar.gcskickoff_2014;
 
+import android.app.Activity;
 import android.app.Application;
 
 import com.parse.Parse;
