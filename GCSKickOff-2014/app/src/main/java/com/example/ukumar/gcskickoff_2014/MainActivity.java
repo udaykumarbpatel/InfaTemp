@@ -74,6 +74,7 @@ public class MainActivity extends Activity {
 
         Button send_task = (Button) findViewById(R.id.send_alert);
         Button places_visit = (Button) findViewById(R.id.places_visit);
+        Button agenda = (Button) findViewById(R.id.agenda);
 
         send_task.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +88,14 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), PlacesListActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        agenda.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Agenda.class);
                 startActivity(intent);
             }
         });

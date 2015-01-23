@@ -77,6 +77,10 @@
             android:name=".PlacesListActivity"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name=".Agenda"
+            android:label="@string/title_activity_agenda" >
+        </activity>
     </application>
 
 </manifest>
