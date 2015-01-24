@@ -361,7 +361,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView113"
+                android:id="@+id/textView143"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
@@ -404,7 +404,7 @@
             android:layout_margin="1dp">
 
             <TextView
-                android:id="@+id/textView13"
+                android:id="@+id/textView139"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"

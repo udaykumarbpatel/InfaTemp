@@ -51,4 +51,13 @@
         android:layout_below="@+id/send_alert"
         android:layout_alignParentLeft="true" />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lets Vote!"
+        android:id="@+id/vote"
+        android:layout_below="@+id/places_visit"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
 </RelativeLayout>
