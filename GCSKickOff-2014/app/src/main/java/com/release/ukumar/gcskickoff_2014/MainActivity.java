@@ -52,7 +52,12 @@ public class MainActivity extends Activity {
         }
 
         TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        ParseInstallation.getCurrentInstallation().put("IMEI", telephonyManager.getDeviceId());
+        if(telephonyManager.getDeviceId() != null)
+        {
+            ParseInstallation.getCurrentInstallation().put("IMEI", telephonyManager.getDeviceId());
+        } else {
+            ParseInstallation.getCurrentInstallation().put("IMEI", "Samsung Tab 4");
+        }
         ParseInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -105,11 +110,7 @@ public class MainActivity extends Activity {
         });
     }
 
-
-
-
-
-    @Override
+   @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -130,4 +131,8 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 }

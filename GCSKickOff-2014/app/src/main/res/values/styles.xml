@@ -1,8 +1,8 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <!-- Customize your theme here. -->
-    </style>
+<!-- Application theme. -->
+<style name="AppTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+    <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+</style>
 
 </resources>

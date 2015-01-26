@@ -1,11 +1,18 @@
 package com.release.ukumar.gcskickoff_2014;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -23,36 +30,62 @@ import java.util.List;
 
 
 public class VoteActivity extends Activity {
+    RadioGroup radioGroup;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vote);
 
+        Button submit_answer = (Button) findViewById(R.id.submit_answer);
+        radioGroup = (RadioGroup) findViewById(R.id.radio_group);
+
+        submit_answer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int id = radioGroup.getCheckedRadioButtonId();
+                if (id == -1){
+                    Toast toast = Toast.makeText(getApplicationContext(), "Please Select a Option", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+                else{
+                    if (id == R.id.radioButton){
+                        postData("Option 1");
+                    }
+                    if (id == R.id.radioButton2){
+                        postData("Option 2");
+                    }
+                    if (id == R.id.radioButton3){
+                        postData("Option 3");
+                    }
+                    if (id == R.id.radioButton4){
+                        postData("Option 4");
+                    }
+                }
+                Toast toast = Toast.makeText(getApplicationContext(), "Vote Submitted!", Toast.LENGTH_SHORT);
+                toast.show();
+                radioGroup.clearCheck();
+
+                findViewById(R.id.submit_answer).setEnabled(false);
+
+                progressstart("Wait for next vote!");
+
+                findViewById(R.id.submit_answer).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        findViewById(R.id.submit_answer).setEnabled(true);
+                        progressdismiss();
+
+                    }
+                }, 60000);
+            }
+        });
     }
 
-    public void onRadioButtonClicked(View view) {
-        boolean checked = ((RadioButton) view).isChecked();
-
-        // Check which radio button was clicked
-        switch (view.getId()) {
-            case R.id.radioButton:
-                if (checked)
-                    postData("Option 1");
-                break;
-            case R.id.radioButton2:
-                if (checked)
-                    postData("Option 2");
-                break;
-            case R.id.radioButton3:
-                if (checked)
-                    postData("Option 3");
-                break;
-            case R.id.radioButton4:
-                if (checked)
-                    postData("Option 4");
-                break;
-        }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     public void postData(String option) {
@@ -65,7 +98,6 @@ public class VoteActivity extends Activity {
                 HttpPost request = new HttpPost(fullUrl);
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
                 params.add(new BasicNameValuePair("entry.1302740522", answer));
-
                 try {
                     UrlEncodedFormEntity formParams = new UrlEncodedFormEntity(params);
                     request.setEntity(formParams);
@@ -104,4 +136,14 @@ public class VoteActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void progressstart(String str) {
+        progressDialog = ProgressDialog.show(this, null, str);
+        progressDialog.setCancelable(false);
+    }
+
+    public void progressdismiss() {
+        progressDialog.dismiss();
+    }
+
 }

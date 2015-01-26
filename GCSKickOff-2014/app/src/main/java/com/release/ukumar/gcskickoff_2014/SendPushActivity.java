@@ -35,6 +35,9 @@ public class SendPushActivity extends Activity {
                     push.setMessage(input);
                     push.setChannel("");
                     push.sendInBackground();
+                    tx1.setText("");
+                    Toast toast = Toast.makeText(getApplicationContext(), "Alert Sent!", Toast.LENGTH_SHORT);
+                    toast.show();
                 }
             }
         });
