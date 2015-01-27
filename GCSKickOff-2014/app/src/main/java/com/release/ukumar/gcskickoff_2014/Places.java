@@ -3,10 +3,12 @@ package com.release.ukumar.gcskickoff_2014;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 /**
  * Created by ukumar on 1/19/2015.
  */
-public class Places {
+public class Places implements Serializable{
 
     double lat, lng;
     String name;

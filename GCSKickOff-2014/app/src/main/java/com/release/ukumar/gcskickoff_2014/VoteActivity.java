@@ -1,17 +1,14 @@
 package com.release.ukumar.gcskickoff_2014;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
@@ -22,6 +19,8 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -37,6 +36,21 @@ public class VoteActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vote);
+        String jsonData = getIntent().getExtras().getString("json");
+        if (jsonData.equals("nothing"))
+        {
+            onBackPressed();
+        }
+
+        TextView ques = (TextView) findViewById(R.id.question);
+
+        try {
+            JSONObject notification = new JSONObject(jsonData);
+            String question = notification.getString("question");
+            ques.setText(question);
+        } catch (JSONException e) {
+            Toast.makeText(getApplicationContext(), "No Questions to Vote", Toast.LENGTH_SHORT).show();
+        }
 
         Button submit_answer = (Button) findViewById(R.id.submit_answer);
         radioGroup = (RadioGroup) findViewById(R.id.radio_group);
@@ -45,40 +59,27 @@ public class VoteActivity extends Activity {
             @Override
             public void onClick(View v) {
                 int id = radioGroup.getCheckedRadioButtonId();
-                if (id == -1){
+                if (id == -1) {
                     Toast toast = Toast.makeText(getApplicationContext(), "Please Select a Option", Toast.LENGTH_SHORT);
                     toast.show();
-                }
-                else{
-                    if (id == R.id.radioButton){
+                } else {
+                    if (id == R.id.radioButton) {
                         postData("Option 1");
                     }
-                    if (id == R.id.radioButton2){
+                    if (id == R.id.radioButton2) {
                         postData("Option 2");
                     }
-                    if (id == R.id.radioButton3){
+                    if (id == R.id.radioButton3) {
                         postData("Option 3");
                     }
-                    if (id == R.id.radioButton4){
+                    if (id == R.id.radioButton4) {
                         postData("Option 4");
                     }
                 }
                 Toast toast = Toast.makeText(getApplicationContext(), "Vote Submitted!", Toast.LENGTH_SHORT);
                 toast.show();
                 radioGroup.clearCheck();
-
-                findViewById(R.id.submit_answer).setEnabled(false);
-
-                progressstart("Wait for next vote!");
-
-                findViewById(R.id.submit_answer).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        findViewById(R.id.submit_answer).setEnabled(true);
-                        progressdismiss();
-
-                    }
-                }, 60000);
+                onBackPressed();
             }
         });
     }

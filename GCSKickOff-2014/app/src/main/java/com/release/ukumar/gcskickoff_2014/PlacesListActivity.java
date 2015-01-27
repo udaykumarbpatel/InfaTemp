@@ -9,10 +9,13 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.provider.Settings;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -26,6 +29,8 @@ public class PlacesListActivity extends Activity implements AsyncGetPlaces.Resul
     ItemListBaseAdapter places_list_adapter;
     ListView list_view;
     LocationManager locationManager;
+    String NAME_KEY = "name";
+
     LocationListener simpleLocationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
@@ -119,13 +124,24 @@ public class PlacesListActivity extends Activity implements AsyncGetPlaces.Resul
     }
 
     @Override
-    public void getResult(ArrayList<Places> result) {
+    public void getResult(final ArrayList<Places> result) {
         progressDialogStop();
         this.final_result = result;
 
         places_list_adapter = new ItemListBaseAdapter(this, result);
 
         list_view.setAdapter(places_list_adapter);
+
+        list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Uri uri = Uri.parse("http://www.google.com/#q=" + result.get(position).getName());
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
