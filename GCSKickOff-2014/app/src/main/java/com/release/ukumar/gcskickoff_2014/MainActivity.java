@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,7 +39,7 @@ public class MainActivity extends Activity {
         SharedPreferences prfs = getSharedPreferences("AUTHENTICATION_FILE_NAME", Context.MODE_PRIVATE);
         String name = prfs.getString("Authentication_Status", "");
 
-        if (!name.equalsIgnoreCase("password") && !name.equalsIgnoreCase("password1")) {
+        if (!name.equalsIgnoreCase("infagcs") && !name.equalsIgnoreCase("infaadmin")) {
             builder();
         }
 
@@ -57,7 +56,6 @@ public class MainActivity extends Activity {
         if (extras != null) {
             try {
                 String jsonData = extras.getString("com.parse.Data");
-                Log.e("Error : " , jsonData);
                 notification_title.setVisibility(View.VISIBLE);
                 notification_message.setVisibility(View.VISIBLE);
                 JSONObject notification = new JSONObject(jsonData);
@@ -100,10 +98,12 @@ public class MainActivity extends Activity {
         Button places_visit = (Button) findViewById(R.id.places_visit);
         Button agenda = (Button) findViewById(R.id.agenda);
         Button vote = (Button) findViewById(R.id.vote);
+        Button restaurant = (Button) findViewById(R.id.restaurant);
+        Button malls = (Button) findViewById(R.id.malls_nearby);
 
         send_task.setVisibility(View.INVISIBLE);
 
-        if(name.equals("password1"))
+        if(name.equals("infaadmin"))
         {
             send_task.setVisibility(View.VISIBLE);
         }
@@ -112,6 +112,22 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SendPushActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        restaurant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), RestuarantActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        malls.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MallActivity.class);
                 startActivity(intent);
             }
         });
@@ -158,7 +174,7 @@ public class MainActivity extends Activity {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 result = userInput.getText() + "";
-                                if (result.equals("password") || result.equals("password1")) {
+                                if (result.equals("infagcs") || result.equals("infaadmin")) {
                                     SharedPreferences preferences = getSharedPreferences("AUTHENTICATION_FILE_NAME", 0);
                                     SharedPreferences.Editor editor = preferences.edit();
                                     editor.putString("Authentication_Status", result.toString());

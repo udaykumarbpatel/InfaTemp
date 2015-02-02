@@ -46,6 +46,22 @@
         android:text="Places to Visit" />
 
     <Button
+        android:id="@+id/restaurant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/places_visit"
+        android:text="Restaurants Nearby" />
+
+    <Button
+        android:id="@+id/malls_nearby"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/restaurant"
+        android:text="Malls Nearby" />
+
+    <Button
         android:id="@+id/agenda"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -60,7 +76,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/places_visit"
+        android:layout_below="@+id/malls_nearby"
         android:text="Lets Vote!" />
 
 </RelativeLayout>

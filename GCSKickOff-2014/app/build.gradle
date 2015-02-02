@@ -8,8 +8,8 @@ android {
         applicationId "com.release.ukumar.gcskickoff_2014"
         minSdkVersion 13
         targetSdkVersion 21
-        versionCode 7
-        versionName "1.6"
+        versionCode 9
+        versionName "2.1"
     }
 
     signingConfigs{

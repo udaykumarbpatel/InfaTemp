@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,10 +45,24 @@ public class VoteActivity extends Activity {
 
         TextView ques = (TextView) findViewById(R.id.question);
 
+        RadioButton r_button1 = (RadioButton) findViewById(R.id.radioButton);
+        RadioButton r_button2 = (RadioButton) findViewById(R.id.radioButton2);
+        RadioButton r_button3 = (RadioButton) findViewById(R.id.radioButton3);
+        RadioButton r_button4 = (RadioButton) findViewById(R.id.radioButton4);
+
         try {
             JSONObject notification = new JSONObject(jsonData);
             String question = notification.getString("question");
             ques.setText(question);
+            String option_1 = notification.getString("option1");
+            r_button1.setText(option_1);
+            String option_2 = notification.getString("option2");
+            r_button2.setText(option_2);
+            String option_3 = notification.getString("option3");
+            r_button3.setText(option_3);
+            String option_4 = notification.getString("option4");
+            r_button4.setText(option_4);
+
         } catch (JSONException e) {
             Toast.makeText(getApplicationContext(), "No Questions to Vote", Toast.LENGTH_SHORT).show();
         }
