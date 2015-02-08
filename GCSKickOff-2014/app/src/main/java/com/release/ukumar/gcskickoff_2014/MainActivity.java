@@ -9,8 +9,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,11 +23,20 @@ import com.parse.SaveCallback;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 
-public class MainActivity extends Activity {
 
+public class MainActivity extends Activity implements AsyncGetTemperature.ResultsPassing {
+
+
+    ArrayList<Temperature> final_result;
     final Context context = this;
     private String result;
+    TextView temperature;
+    TextView weather;
+
+    String Admin_Password = "infaadmin";
+    String User_Password = "infagcs";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +46,7 @@ public class MainActivity extends Activity {
         SharedPreferences prfs = getSharedPreferences("AUTHENTICATION_FILE_NAME", Context.MODE_PRIVATE);
         String name = prfs.getString("Authentication_Status", "");
 
-        if (!name.equalsIgnoreCase("infagcs") && !name.equalsIgnoreCase("infaadmin")) {
+        if (!name.equalsIgnoreCase(User_Password) && !name.equalsIgnoreCase(Admin_Password)) {
             builder();
         }
 
@@ -47,9 +54,15 @@ public class MainActivity extends Activity {
         ParseAnalytics.trackAppOpened(getIntent());
         TextView notification_title = (TextView) findViewById(R.id.notification_title);
         TextView notification_message = (TextView) findViewById(R.id.notification_message);
+        temperature = (TextView) findViewById(R.id.temperature);
+        weather = (TextView) findViewById(R.id.weather);
 
         notification_title.setVisibility(View.INVISIBLE);
         notification_message.setVisibility(View.INVISIBLE);
+
+        String temp_url = "http://api.openweathermap.org/data/2.5/weather?q=Vienna,Austria&APPID=31d3692db1ebefffc2ce7599dd1726e8";
+
+        new AsyncGetTemperature(MainActivity.this).execute(temp_url);
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -84,7 +97,7 @@ public class MainActivity extends Activity {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
-                    Toast toast = Toast.makeText(getApplicationContext(), "Loaded!", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getApplicationContext(), "Welcome!", Toast.LENGTH_SHORT);
                     toast.show();
                 } else {
                     e.printStackTrace();
@@ -103,7 +116,7 @@ public class MainActivity extends Activity {
 
         send_task.setVisibility(View.INVISIBLE);
 
-        if(name.equals("infaadmin"))
+        if(name.equals(Admin_Password))
         {
             send_task.setVisibility(View.VISIBLE);
         }
@@ -174,7 +187,7 @@ public class MainActivity extends Activity {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 result = userInput.getText() + "";
-                                if (result.equals("infagcs") || result.equals("infaadmin")) {
+                                if (result.equals(User_Password) || result.equals(Admin_Password)) {
                                     SharedPreferences preferences = getSharedPreferences("AUTHENTICATION_FILE_NAME", 0);
                                     SharedPreferences.Editor editor = preferences.edit();
                                     editor.putString("Authentication_Status", result.toString());
@@ -200,29 +213,39 @@ public class MainActivity extends Activity {
         alertDialog.show();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        return true;
+//    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public void getResult(ArrayList<Temperature> result) {
+        this.final_result = result;
+
+//        int cel = ((int) (result.get(0).getTemp()- 273.15));
+//        String test = "Temperature = " + ((int) (result.get(0).getTemp()- 273.15)) + "\u00b0 C";
+        temperature.setText("Temperature = " + ((int) (result.get(0).getTemp()- 273.15)) + "\u00b0 C");
+        weather.setText(result.get(0).getWeather()+ ", " + result.get(0).getDescription() );
     }
 }
