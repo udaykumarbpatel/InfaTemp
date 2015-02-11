@@ -1,9 +1,8 @@
 package com.release.ukumar.gcskickoff_2014;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TextView;
 
 
@@ -11,14 +10,26 @@ public class ForeignExchange extends Activity implements AsyncGetForeignCurrency
 
     Currency final_results;
     TextView inr, usd, yen, won, cand, real, aud, yuan, singd, mexpeso, gbp;
-
+    ProgressDialog progressDialog;
+    int count=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_foreign_exchange);
-        String temp_url = "http://openexchangerates.org/api/latest.json?app_id=a911ba9948cf4084abbc05d1c91791fe";
-        new AsyncGetForeignCurrency(ForeignExchange.this).execute(temp_url);
 
+        new AsyncGetForeignCurrency(ForeignExchange.this).execute("INR");
+        new AsyncGetForeignCurrency(ForeignExchange.this).execute("USD");
+        new AsyncGetForeignCurrency(ForeignExchange.this).execute("JPY");
+        new AsyncGetForeignCurrency(ForeignExchange.this).execute("KRW");
+        new AsyncGetForeignCurrency(ForeignExchange.this).execute("CAD");
+        new AsyncGetForeignCurrency(ForeignExchange.this).execute("BRL");
+        new AsyncGetForeignCurrency(ForeignExchange.this).execute("AUD");
+        new AsyncGetForeignCurrency(ForeignExchange.this).execute("CNY");
+        new AsyncGetForeignCurrency(ForeignExchange.this).execute("SGD");
+        new AsyncGetForeignCurrency(ForeignExchange.this).execute("MXN");
+        new AsyncGetForeignCurrency(ForeignExchange.this).execute("GBP");
+
+        ProgressDialogStart("Loading ForEx values...");
         inr = (TextView) findViewById(R.id.inr);
         usd = (TextView) findViewById(R.id.usd);
         yen = (TextView) findViewById(R.id.yen);
@@ -30,21 +41,69 @@ public class ForeignExchange extends Activity implements AsyncGetForeignCurrency
         singd = (TextView) findViewById(R.id.singd);
         mexpeso = (TextView) findViewById(R.id.mexpeso);
         gbp = (TextView) findViewById(R.id.gbp);
+
     }
 
     @Override
     public void getResult(Currency result) {
         this.final_results = result;
-        inr.setText(result.getCurr_inr());
-        usd.setText(result.getCurr_usd());
-        yen.setText(result.getCurr_jpy());
-        won.setText(result.getCurr_krw());
-        cand.setText(result.getCurr_cad());
-        real.setText(result.getCurr_brl());
-        aud.setText(result.getCurr_aud());
-        yuan.setText(result.getCurr_cny());
-        singd.setText(result.getCurr_sgd());
-        mexpeso.setText(result.getCurr_mxn());
-        gbp.setText(result.getCurr_gbp());
+
+        if (result.getCurrency_code().equals("INR")) {
+            inr.setText(result.getCurrency_rate());
+            count++;
+        }
+        if (result.getCurrency_code().equals("USD")) {
+            usd.setText(result.getCurrency_rate());
+            count++;
+        }
+        if (result.getCurrency_code().equals("JPY")) {
+            yen.setText(result.getCurrency_rate());
+            count++;
+        }
+        if (result.getCurrency_code().equals("KRW")) {
+            won.setText(result.getCurrency_rate());
+            count++;
+        }
+        if (result.getCurrency_code().equals("CAD")) {
+            cand.setText(result.getCurrency_rate());
+            count++;
+        }
+        if (result.getCurrency_code().equals("BRL")) {
+            real.setText(result.getCurrency_rate());
+            count++;
+        }
+        if (result.getCurrency_code().equals("AUD")) {
+            aud.setText(result.getCurrency_rate());
+            count++;
+        }
+        if (result.getCurrency_code().equals("CNY")) {
+            yuan.setText(result.getCurrency_rate());
+            count++;
+        }
+        if (result.getCurrency_code().equals("SGD")) {
+            singd.setText(result.getCurrency_rate());
+            count++;
+        }
+        if (result.getCurrency_code().equals("MXN")) {
+            mexpeso.setText(result.getCurrency_rate());
+            count++;
+        }
+        if (result.getCurrency_code().equals("GBP")) {
+            gbp.setText(result.getCurrency_rate());
+            count++;
+        }
+        if(count >= 11)
+        {
+            progressDialogStop();
+        }
+    }
+
+    public void ProgressDialogStart(String str) {
+        progressDialog = ProgressDialog.show(this, null, str);
+        progressDialog.setCancelable(false);
+    }
+
+    public void progressDialogStop() {
+        progressDialog.dismiss();
     }
 }

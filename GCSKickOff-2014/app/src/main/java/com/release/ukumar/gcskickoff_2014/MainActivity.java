@@ -60,7 +60,6 @@ public class MainActivity extends Activity implements AsyncGetTemperature.Result
         notification_message.setVisibility(View.INVISIBLE);
 
         String temp_url = "http://api.openweathermap.org/data/2.5/weather?q=Vienna,Austria&APPID=31d3692db1ebefffc2ce7599dd1726e8";
-
         new AsyncGetTemperature(MainActivity.this).execute(temp_url);
 
         Intent intent = getIntent();
@@ -231,6 +230,6 @@ public class MainActivity extends Activity implements AsyncGetTemperature.Result
     public void getResult(ArrayList<Temperature> result) {
         this.final_result = result;
         temperature.setText("Temperature = " + ((int) (result.get(0).getTemp() - 273.15)) + "\u00b0 C");
-        weather.setText(result.get(0).getWeather() + ", " + result.get(0).getDescription());
+        weather.setText(result.get(0).getWeather());
     }
 }

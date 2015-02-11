@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -114,16 +115,20 @@ public class VoteActivity extends Activity {
                     UrlEncodedFormEntity formParams = new UrlEncodedFormEntity(params);
                     request.setEntity(formParams);
                     HttpResponse response = client.execute(request);
+                    if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+                        Thread.sleep(2000);
+                        client.execute(request);
+                    }
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 } catch (ClientProtocolException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         }).start();
-
-
     }
 }
