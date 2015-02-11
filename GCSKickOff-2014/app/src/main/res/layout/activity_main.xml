@@ -9,6 +9,36 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Vienna, Austria"
+        android:id="@+id/textView2"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/notification_title"
+        android:layout_alignEnd="@+id/notification_title" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Temperature = - C"
+        android:id="@+id/temperature"
+        android:layout_below="@+id/textView2"
+        android:layout_alignRight="@+id/notification_title"
+        android:layout_alignEnd="@+id/notification_title" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Weather"
+        android:id="@+id/weather"
+        android:layout_below="@+id/temperature"
+        android:layout_alignRight="@+id/textView2"
+        android:layout_alignEnd="@+id/textView2" />
+
+    <TextView
         android:id="@+id/notification_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -80,34 +110,13 @@
         android:layout_below="@+id/malls_nearby"
         android:text="Lets Vote!" />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/forex"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Temperature = - C"
-        android:id="@+id/temperature"
-        android:layout_below="@+id/textView2"
-        android:layout_alignRight="@+id/notification_title"
-        android:layout_alignEnd="@+id/notification_title" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Vienna, Austria"
-        android:id="@+id/textView2"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/notification_title"
-        android:layout_alignEnd="@+id/notification_title" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Weather"
-        android:id="@+id/weather"
-        android:layout_below="@+id/temperature"
-        android:layout_alignRight="@+id/textView2"
-        android:layout_alignEnd="@+id/textView2" />
+        android:text="Foreign Exchange"
+        android:layout_below="@+id/vote"
+        android:layout_alignRight="@+id/weather"
+        android:layout_alignEnd="@+id/weather" />
 
 </RelativeLayout>

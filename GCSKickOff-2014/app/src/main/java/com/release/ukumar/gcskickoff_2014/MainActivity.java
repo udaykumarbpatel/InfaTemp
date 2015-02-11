@@ -29,14 +29,13 @@ import java.util.ArrayList;
 public class MainActivity extends Activity implements AsyncGetTemperature.ResultsPassing {
 
 
-    ArrayList<Temperature> final_result;
     final Context context = this;
-    private String result;
+    ArrayList<Temperature> final_result;
     TextView temperature;
     TextView weather;
-
     String Admin_Password = "infaadmin";
     String User_Password = "infagcs";
+    private String result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,16 +68,18 @@ public class MainActivity extends Activity implements AsyncGetTemperature.Result
         if (extras != null) {
             try {
                 String jsonData = extras.getString("com.parse.Data");
-                notification_title.setVisibility(View.VISIBLE);
-                notification_message.setVisibility(View.VISIBLE);
-                JSONObject notification = new JSONObject(jsonData);
-                if(notification.has("question"))
-                {
+                JSONObject notification = new JSONObject("{\"alert\":\"-\"}");
+                if(jsonData!= null) {
+                    notification = new JSONObject(jsonData);
+                }
+                if (notification.has("question")) {
                     Intent intent1 = new Intent(getApplicationContext(), VoteActivity.class);
                     intent1.putExtra("json", jsonData);
                     startActivity(intent1);
                 }
                 String message = notification.getString("alert");
+                notification_title.setVisibility(View.VISIBLE);
+                notification_message.setVisibility(View.VISIBLE);
                 notification_title.setText("Last Alert!!!! ");
                 notification_message.setText(message);
 
@@ -113,11 +114,12 @@ public class MainActivity extends Activity implements AsyncGetTemperature.Result
         Button vote = (Button) findViewById(R.id.vote);
         Button restaurant = (Button) findViewById(R.id.restaurant);
         Button malls = (Button) findViewById(R.id.malls_nearby);
+        Button forex = (Button) findViewById(R.id.forex);
+
 
         send_task.setVisibility(View.INVISIBLE);
 
-        if(name.equals(Admin_Password))
-        {
+        if (name.equals(Admin_Password)) {
             send_task.setVisibility(View.VISIBLE);
         }
 
@@ -169,6 +171,14 @@ public class MainActivity extends Activity implements AsyncGetTemperature.Result
                 startActivity(intent);
             }
         });
+
+        forex.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ForeignExchange.class);
+                startActivity(intent);
+            }
+        });
     }
 
     void builder() {
@@ -208,31 +218,9 @@ public class MainActivity extends Activity implements AsyncGetTemperature.Result
 
         // create alert dialog
         AlertDialog alertDialog = alertDialogBuilder.create();
-
         // show it
         alertDialog.show();
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
     @Override
     protected void onResume() {
@@ -242,10 +230,7 @@ public class MainActivity extends Activity implements AsyncGetTemperature.Result
     @Override
     public void getResult(ArrayList<Temperature> result) {
         this.final_result = result;
-
-//        int cel = ((int) (result.get(0).getTemp()- 273.15));
-//        String test = "Temperature = " + ((int) (result.get(0).getTemp()- 273.15)) + "\u00b0 C";
-        temperature.setText("Temperature = " + ((int) (result.get(0).getTemp()- 273.15)) + "\u00b0 C");
-        weather.setText(result.get(0).getWeather()+ ", " + result.get(0).getDescription() );
+        temperature.setText("Temperature = " + ((int) (result.get(0).getTemp() - 273.15)) + "\u00b0 C");
+        weather.setText(result.get(0).getWeather() + ", " + result.get(0).getDescription());
     }
 }

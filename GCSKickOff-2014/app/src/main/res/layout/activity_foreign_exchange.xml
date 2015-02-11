@@ -1,0 +1,188 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.release.ukumar.gcskickoff_2014.ForeignExchange">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="1 EURO "
+        android:id="@+id/textView3"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView3"
+        android:paddingTop="10dp"
+        android:stretchColumns="*"
+         >
+
+
+        <TableRow
+            android:paddingBottom="18dp"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="India (INR)" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/inr"
+                android:text="" />
+        </TableRow>
+
+
+        <TableRow
+            android:paddingBottom="18dp"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="United States (USD)" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/usd"
+                android:text="" />
+        </TableRow>
+
+        <TableRow
+            android:paddingBottom="18dp"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="Japan (JPY)" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/yen"
+                android:text="" />
+        </TableRow>
+
+
+        <TableRow
+            android:paddingBottom="18dp"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="Korea (KRW)" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/won"
+                android:text="" />
+        </TableRow>
+
+        <TableRow
+            android:paddingBottom="18dp"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="Canadian Dollar (CAD)" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/cand"
+                android:text="" />
+        </TableRow>
+
+
+        <TableRow
+            android:paddingBottom="18dp"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="Brazil (BRL)" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/real"
+                android:text="" />
+        </TableRow>
+
+        <TableRow
+            android:paddingBottom="18dp"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="Australian Dollar (AUD)" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/aud"
+                android:text="" />
+        </TableRow>
+
+
+        <TableRow
+            android:paddingBottom="18dp"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="China (CNY)" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/yuan"
+                android:text="" />
+        </TableRow>
+
+        <TableRow
+            android:paddingBottom="18dp"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="Singapore Dollar (SGD)" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/singd"
+                android:text="" />
+        </TableRow>
+
+
+        <TableRow
+            android:paddingBottom="18dp"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="Mexican Peso (MXN) " />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/mexpeso"
+                android:text="" />
+        </TableRow>
+
+        <TableRow
+            android:paddingBottom="18dp"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="British Pound sterling (GBP)" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/gbp"
+                android:text="" />
+        </TableRow>
+
+    </TableLayout>
+
+</RelativeLayout>

@@ -11,6 +11,11 @@ public class Temperature {
     String weather, description;
     double temp;
 
+    public Temperature(JSONObject placesJSONObject) throws JSONException {
+        this.description = placesJSONObject.getString("description");
+        this.weather = placesJSONObject.getString("main");
+    }
+
     public double getTemp() {
         return temp;
     }
@@ -19,34 +24,20 @@ public class Temperature {
         this.temp = temp;
     }
 
-    public Temperature(JSONObject placesJSONObject) throws JSONException {
-        this.description = placesJSONObject.getString("description");
-        this.weather = placesJSONObject.getString("main");
+    public String getWeather() {
+
+        return weather;
     }
 
     public void setWeather(String weather) {
         this.weather = weather;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    @Override
-    public String toString() {
-        return "Temperature{" +
-                "weather='" + weather + '\'' +
-                ", description='" + description + '\'' +
-                ", temp=" + temp +
-                '}';
-    }
-
-    public String getWeather() {
-
-        return weather;
-    }
-
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

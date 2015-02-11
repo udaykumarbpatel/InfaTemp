@@ -12,5 +12,6 @@
     <string name="title_activity_place">PlaceActivity</string>
     <string name="title_activity_restuarant">RestuarantActivity</string>
     <string name="title_activity_mall">MallActivity</string>
+    <string name="title_activity_foreign_exchange">ForeignExchange</string>
 
 </resources>
